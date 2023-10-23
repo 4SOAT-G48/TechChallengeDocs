@@ -1,0 +1,49 @@
+@startwbs
+
+!theme blueprint
+'!theme mimeograph
+'!theme reddress-darkblue
+'!theme vibrant
+
+title
+    Estrutura de pastas do projeto
+end title
+
+* TechChallenge
+**_ src
+***_ main
+****_ java
+*****_ br/com/fiap/soat/grupo48
+******_ application
+*******_ domain
+********_ __NOME DO PACOTE__
+*********_ model
+*********_ valueobjects
+*********_ aggregates
+*********_ events
+*********_ exceptions
+*********_ repositories
+*********_ services
+*********_ port
+**********_ api
+**********_ spi
+*********_ usecase
+******_ infrastructure
+*******_ adapter
+********_ driver
+*********_ rest
+********_ driven
+*********_ persistence
+*******_ config
+****_ resources
+*****_ application.properties
+*****_ application-dev.properties
+***_ test
+****_ java
+*****_ br/com/fiap/soat/grupo48
+******_ unit
+******_ integration
+****_ resources
+***_ pom.xml
+
+@endwbs

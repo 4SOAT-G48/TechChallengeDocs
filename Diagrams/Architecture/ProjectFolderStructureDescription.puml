@@ -1,0 +1,122 @@
+@startwbs
+
+!theme blueprint
+'!theme mimeograph
+'!theme reddress-darkblue
+'!theme vibrant
+
+title
+    Estrutura de pastas do projeto
+    com descrições de conteúdo
+end title
+
+* TechChallenge
+** src
+*** main
+**** java
+***** br/com/fiap/soat/grupo48
+******:=application
+-- Descrição --
+Contém a lógica de aplicação e casos de uso. Inclui DTOs (Data Transfer Objects), serviços de aplicação, mappers para conversão entre entidades de domínio e DTOs, etc.
+;
+*******:=domain
+-- Descrição --
+O núcleo da lógica de negócios. Inclui modelos de domínio (entidades, objetos de valor).
+;
+********:=__NOME DO PACOTE__
+-- Descrição --
+Muda de acordo com o pacote a ser definido, exemplos: pronduto, conta, pedido, common (lógica compartilhada)).
+;
+*********:=model
+-- Descrição --
+Contém todas as entidades do domínio. Estas são as principais classes de negócios que possuem identidade e estado.
+;
+*********:=valueobjects
+-- Descrição --
+Objetos de Valor são imutáveis e não possuem uma identidade distinta. Eles representam aspectos descritivos do domínio.
+;
+*********:=aggregates
+-- Descrição --
+Agregados são conjuntos coesivos de entidades e objetos de valor tratados como uma única unidade.
+;
+*********:=events (opcional)
+-- Descrição --
+Se estiver usando o padrão de Eventos de Domínio, você armazenaria a definição desses eventos aqui.
+;
+*********:=exceptions (opcional)
+-- Descrição --
+Exceções específicas do domínio que representam cenários de erro no contexto do domínio.
+;
+*********:=repositories
+-- Descrição --
+Interfaces para repositórios, que definem contratos para acessar e armazenar Agregados ou Entidades. As implementações concretas geralmente residem em outra camada, como infraestrutura.
+;
+*********:=services
+-- Descrição --
+Serviços de Domínio. Eles contêm lógica que não pertence naturalmente a uma entidade ou valor-objeto.
+;
+*********:=usecase
+-- Descrição --
+Focam em orquestrar operações de nível superior, integrando diferentes partes do sistema para realizar uma tarefa específica.
+;
+*********:=port
+-- Descrição --
+Portas (interfaces) que representam os contratos para interações entre o domínio e detalhes externos.
+;
+**********:=api
+-- Descrição --
+Public-facing interfaces conhecido também por Driver Port ou Primary Port.
+Representa a interface através da qual a lógica principal do aplicativo expõe sua funcionalidade ou requisitos para o mundo exterior. É a maneira pela qual os atores externos (como interfaces de usuário, sistemas externos ou testes) interagem com a aplicação.
+;
+**********:=spi
+-- Descrição --
+Service Provider Interface conhecido também por Driven Port ou Secundary Port.
+Representa as interfaces ou contratos que a aplicação espera que a infraestrutura externa implemente. Por exemplo, se a aplicação precisa de acesso a um banco de dados, ela define uma SPI para operações de banco de dados. Uma implementação concreta dessa SPI (por exemplo, usando JPA, JDBC, etc.) será fornecida pela camada de infraestrutura.
+;
+******:=infrastructure
+-- Descrição --
+Contém todos os detalhes técnicos e implementações externas. Isso inclui os adaptadores para interagir com sistemas externos, como APIs REST, bancos de dados, serviços de mensageria, etc.
+;
+*******:=adapter
+-- Descrição --
+Implementações específicas para interfaces definidas na camada de domínio.
+;
+********:=driver
+-- Descrição --
+Eles estão do lado de fora da aplicação e servem como ponto de entrada para a lógica de negócios.
+Tipicamente, interfaces de usuário, API REST, RPC, CLI.
+Eles invocam os use-cases da aplicação através de uma "porta primária" ou "porta da API" (uma interface definida pela aplicação).
+;
+*********:=rest
+-- Descrição --
+Controllers, Resources, etc.
+;
+********:=driven
+-- Descrição --
+Eles implementam uma funcionalidade que a aplicação necessita, mas que está fora de sua lógica central, como acesso a banco de dados, comunicação com serviços externos, envio de notificações, etc.
+A aplicação define o que precisa em termos de uma "porta secundária" ou "porta SPI" (Service Provider Interface). O Driven Adapter concretiza essa porta.
+Por exemplo, se a aplicação precisa de uma forma de persistir dados, ela define uma porta (interface) para operações CRUD. O Driven Adapter para um banco de dados SQL específico implementará essa porta.
+;
+*********:=persistence
+-- Descrição --
+Contém Repositórios JPA, Entidades e qualquer outra especificidade relacionada ao JPA.
+;
+*******:=config
+-- Descrição --
+Classes de configuração do Spring.
+;
+**** resources
+***** application.properties
+***** application-dev.properties
+***:=test
+-- Descrição --
+Contém testes de unidade e integração.
+;
+**** java
+***** br/com/fiap/soat/grupo48
+****** unit
+****** integration
+**** resources
+*** pom.xml
+
+@endwbs

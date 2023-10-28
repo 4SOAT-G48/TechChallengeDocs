@@ -1,0 +1,133 @@
+@startuml ProjectGenericClass
+
+'!theme blueprint
+
+title 
+    Visão geral e genérica do vinculo entre as classes
+end title
+
+package "application" as aplicationPkg {
+
+    package "NOME_MODULO" as moduloPkg {
+
+        package "model" as modelPkg {
+            
+            annotation Data <<Lombok>>
+            enum Enumeration {
+
+            }
+            class EntidadeNegocio {
+                -string privateVariable
+                -enumeration enumVariable
+            }
+
+            EntidadeNegocio "*" -up-> "1" Enumeration : tem variavel com tipo >
+            EntidadeNegocio o-up- Data : anotada com >
+        } 
+    }
+
+    package "port" as portPkg {
+        package api {
+            interface ParaChamadaExternaPort <<apiPort>> {
+                #{abstract} List<EntidadeNegocio> buscaTodasEntidade()
+                #{abstract} EntidadeNegocio criaEntidade(EntidadeNegocio param)
+                #{abstract} EntidadeNegocio atualizaEntidade(EntidadeNegocio param)
+                #{abstract} void excluiEntidade(UUID codigo)
+            }
+
+            ParaChamadaExternaPort  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+            
+        }
+
+        package spi {
+            interface ParaChamadaInternaPort <<apiPort>> {
+                #{abstract} List<EntidadeNegocio> buscaEntidade()
+                #{abstract} EntidadeNegocio salvaEntidade(EntidadeNegocio param)
+                #{abstract} void excluiEntidade(UUID codigo)
+            }
+            
+            ParaChamadaInternaPort  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+        }
+    }
+
+    package "usecase" as usecasePkg {
+        class ImplementacaoFluxoChamadaExterna {
+            +List<EntidadeNegocio> buscaTodasEntidade()
+            +EntidadeNegocio criaEntidade(EntidadeNegocio param)
+            +EntidadeNegocio atualizaEntidade(EntidadeNegocio param)
+            +void excluiEntidade(UUID codigo)
+        }
+        ParaChamadaExternaPort <|... ImplementacaoFluxoChamadaExterna : implementa <<implements>>
+
+        ImplementacaoFluxoChamadaExterna  -up--> EntidadeNegocio : usa <<parametroOuRetorno>> >
+        ImplementacaoFluxoChamadaExterna  -up--> ParaChamadaInternaPort : usa <<parametroOuRetorno>> >
+        
+        
+    }
+
+}
+
+package "infrastructure" as infra {
+    package adapter {
+        package driven {
+            package persistence {
+                package Entity {
+                    annotation Entity <<JPA>>
+                    annotation Table <<JPA>>
+                    class EntidadeBancoEntity {
+                        -string privateVariable
+                    }
+                    EntidadeBancoEntity o-- Entity : anotada com >
+                    EntidadeBancoEntity o-- Table : anotada com >
+                                        
+                }
+                package repository {
+                    annotation Component <<JPA>>
+                    class EntidadeRepository {
+                        +List<EntidadeNegocio> buscaEntidade()
+                        +EntidadeNegocio salvaEntidade(EntidadeNegocio param)
+                        +void excluiEntidade(UUID codigo)
+                    }
+                    EntidadeRepository o-- Component : anotada com >
+
+                    annotation Repository <<JPA>>
+                    interface SpringEntidadeRepository <<extends JpaRepository<EntidadeBancoEntity, UUID>>> {
+                        
+                    }
+                    SpringEntidadeRepository o-- Repository : anotada com >
+                    SpringEntidadeRepository o-- EntidadeBancoEntity : manipula >
+
+                    EntidadeRepository --> SpringEntidadeRepository : chama >
+                }
+                ParaChamadaInternaPort <|.. EntidadeRepository : implementa <<implements>>
+            }
+        }
+
+        package driver {
+            package rest {
+                class EntidadesController {
+                    +List<EntidadeNegocio> getEntidades()
+                    +EntidadeNegocio getEntidade(UUID codigo)
+                    +EntidadeNegocio criarEntidade(EntidadeNegocio entidade)
+                    +EntidadeNegocio atualizaEntidade(EntidadeNegocio entidade)
+                    +EntidadeNegocio excliEntidade(UUID codigo)
+                }
+                EntidadesController  -up--> ImplementacaoFluxoChamadaExterna : chama negocio >
+                EntidadesController  -up--> EntidadeNegocio : usa <<parametroOuRetorno>> >
+            }
+        }
+    }
+
+    package config {
+        annotation Configuration <<Spring>>
+        class BeanConfiguration {
+            +ParaChamadaExternaPort usecase1(ParaChamadaInternaPort)
+        }
+
+        BeanConfiguration o-up- Configuration : anotada com >
+        BeanConfiguration -up-- Component : 1-Busca o componente que implementou\na interface pedida no parametro >
+        BeanConfiguration -up-- ImplementacaoFluxoChamadaExterna : 2-Cria o objeto que implementa o use case\ne liga com a implentação da infra
+    }
+}
+
+@enduml

@@ -47,14 +47,6 @@ Se estiver usando o padrão de Eventos de Domínio, você armazenaria a definiç
 -- Descrição --
 Exceções específicas do domínio que representam cenários de erro no contexto do domínio.
 ;
-*********:=repositories
--- Descrição --
-Interfaces para repositórios, que definem contratos para acessar e armazenar Agregados ou Entidades. As implementações concretas geralmente residem em outra camada, como infraestrutura.
-;
-*********:=services
--- Descrição --
-Serviços de Domínio. Eles contêm lógica que não pertence naturalmente a uma entidade ou valor-objeto.
-;
 *********:=usecase
 -- Descrição --
 Focam em orquestrar operações de nível superior, integrando diferentes partes do sistema para realizar uma tarefa específica.

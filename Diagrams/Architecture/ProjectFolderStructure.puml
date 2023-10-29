@@ -22,8 +22,6 @@ end title
 *********_ aggregates
 *********_ events
 *********_ exceptions
-*********_ repositories
-*********_ services
 *********_ port
 **********_ api
 **********_ spi

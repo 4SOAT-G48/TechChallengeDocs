@@ -31,7 +31,7 @@ Muda de acordo com o pacote a ser definido, exemplos: pronduto, conta, pedido, c
 -- Descrição --
 Contém todas as entidades do domínio. Estas são as principais classes de negócios que possuem identidade e estado.
 ;
-*********:=valueobjects
+*********:=valueobject
 -- Descrição --
 Objetos de Valor são imutáveis e não possuem uma identidade distinta. Eles representam aspectos descritivos do domínio.
 ;

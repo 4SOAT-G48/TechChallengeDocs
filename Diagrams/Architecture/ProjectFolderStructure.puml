@@ -18,12 +18,10 @@ end title
 *******_ domain
 ********_ __NOME DO PACOTE__
 *********_ model
-*********_ valueobjects
+*********_ valueobject
 *********_ aggregates
 *********_ events
 *********_ exceptions
-*********_ repositories
-*********_ services
 *********_ port
 **********_ api
 **********_ spi

@@ -31,7 +31,7 @@ Muda de acordo com o pacote a ser definido, exemplos: pronduto, conta, pedido, c
 -- Descrição --
 Contém todas as entidades do domínio. Estas são as principais classes de negócios que possuem identidade e estado.
 ;
-*********:=valueobjects
+*********:=valueobject
 -- Descrição --
 Objetos de Valor são imutáveis e não possuem uma identidade distinta. Eles representam aspectos descritivos do domínio.
 ;
@@ -46,14 +46,6 @@ Se estiver usando o padrão de Eventos de Domínio, você armazenaria a definiç
 *********:=exceptions (opcional)
 -- Descrição --
 Exceções específicas do domínio que representam cenários de erro no contexto do domínio.
-;
-*********:=repositories
--- Descrição --
-Interfaces para repositórios, que definem contratos para acessar e armazenar Agregados ou Entidades. As implementações concretas geralmente residem em outra camada, como infraestrutura.
-;
-*********:=services
--- Descrição --
-Serviços de Domínio. Eles contêm lógica que não pertence naturalmente a uma entidade ou valor-objeto.
 ;
 *********:=usecase
 -- Descrição --

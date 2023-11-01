@@ -35,15 +35,15 @@ Contém todas as entidades do domínio. Estas são as principais classes de neg�
 -- Descrição --
 Objetos de Valor são imutáveis e não possuem uma identidade distinta. Eles representam aspectos descritivos do domínio.
 ;
-*********:=aggregates
+*********:=aggregate
 -- Descrição --
 Agregados são conjuntos coesivos de entidades e objetos de valor tratados como uma única unidade.
 ;
-*********:=events (opcional)
+*********:=event (opcional)
 -- Descrição --
 Se estiver usando o padrão de Eventos de Domínio, você armazenaria a definição desses eventos aqui.
 ;
-*********:=exceptions (opcional)
+*********:=exception (opcional)
 -- Descrição --
 Exceções específicas do domínio que representam cenários de erro no contexto do domínio.
 ;

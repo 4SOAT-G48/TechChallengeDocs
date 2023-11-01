@@ -19,9 +19,9 @@ end title
 ********_ __NOME DO PACOTE__
 *********_ model
 *********_ valueobject
-*********_ aggregates
-*********_ events
-*********_ exceptions
+*********_ aggregate
+*********_ event
+*********_ exception
 *********_ port
 **********_ api
 **********_ spi

@@ -220,10 +220,10 @@
 			]
 		},
 		{
-			"name": "Fluxo - Cliente",
+			"name": "Fluxo - Pedido",
 			"item": [
 				{
-					"name": "Passo 1 - Identificação do cliente",
+					"name": "Passo 1 - Cliente - Identificação do cliente",
 					"item": [
 						{
 							"name": "Novo Usuário",
@@ -274,7 +274,7 @@
 					]
 				},
 				{
-					"name": "Passo 2 - Criação de Pedido",
+					"name": "Passo 2 - Cliente - Criação de Pedido",
 					"item": [
 						{
 							"name": "Lista Produtos Disponiveis Por Categoria LANCHE",
@@ -462,7 +462,7 @@
 					]
 				},
 				{
-					"name": "Passo 3 - Cozinha",
+					"name": "Passo 3 - Cozinha - Recebimento, preparo e passagem para o atendente",
 					"item": [
 						{
 							"name": "Busca pedidos pela situacao RECEBIDO",
@@ -571,7 +571,7 @@
 					]
 				},
 				{
-					"name": "Passo 4 - Atendente",
+					"name": "Passo 4 - Atendente - Pronto, em entrega e Finalizado",
 					"item": [
 						{
 							"name": "Busca pedidos pela situacao PRONTO",
@@ -680,7 +680,7 @@
 					]
 				},
 				{
-					"name": "Passos 2 a 4 - monitor de acompanhamento do cliente",
+					"name": "Passos 2 a 4 - Monitor de acompanhamento do cliente",
 					"item": [
 						{
 							"name": "Busca pedidos para mostra no monitor de acompanhamento do cliente",

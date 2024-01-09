@@ -1,0 +1,131 @@
+@startuml ApplicationArchitectureChangeCleanArchitecture
+
+skinparam linetype ortho
+'left to right direction
+
+title 
+    Organização das classes 
+    Visão a partir das camadas da Clean Architecture
+end title
+
+frame "Frameworks & Drivers" #A7D7FD {
+
+
+    package "infrastructure/adapter/driven/persistence" {
+        package "entity" {
+            class EntidadeBancoEntity
+        }
+        
+        package "repository/__nome_modulo__" {
+            
+            interface SpringEntidadeRepository 
+        }
+        SpringEntidadeRepository o-- EntidadeBancoEntity : manipula >
+    }
+
+    frame "Intefaces Adapters" #A2FDBA {
+
+        frame "Applications Business Rules" #FFA09C {
+            frame "Enterprise Business Rules" #FCFDBA {
+
+                package "application/__nome_modulo__/model" as modelPkg {
+
+                    class EntidadeNegocio <<Entities>>
+
+                }
+
+            }
+
+            package "application/__nome_modulo__/usecase" as usecasePkg{
+                class ImplementacaoFluxoChamadaExterna <<Use Cases>>
+
+                ImplementacaoFluxoChamadaExterna  -up--> EntidadeNegocio : usa <<parametroOuRetorno>> >
+        
+            }
+
+            package "application/__nome_modulo__/dto" as dtoPkg{
+                class EntidadeDto <<DTO>> #red
+
+        
+            }
+
+            package "application/__nome_modulo__/ports" {
+                package "api" {
+                    interface ParaChamadaExternaPort 
+                }
+
+                ParaChamadaExternaPort  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+                ParaChamadaExternaPort <|... ImplementacaoFluxoChamadaExterna : implementa <<implements>>
+
+                package "spi" {
+                    interface EntidadeRepositoryGatewayInterface <<Interface Gateway>> #RoyalBlue
+
+                    EntidadeRepositoryGatewayInterface  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+                    ImplementacaoFluxoChamadaExterna  -up--> EntidadeRepositoryGatewayInterface : usa <<parametroOuRetorno>> >
+
+                    note right of EntidadeRepositoryGatewayInterface
+                        Mudar o nome
+                    end note
+                }
+            }
+            
+        }
+
+
+        package "infrastructure/adapter/driven/persistence/repository/__nome_modulo__" {
+            class EntidadeRepositoryGateway <<Gateway>> #RoyalBlue
+
+            EntidadeRepositoryGateway --> SpringEntidadeRepository : chama >
+            EntidadeRepositoryGatewayInterface <|.. EntidadeRepositoryGateway : implementa <<implements>>
+
+            note right of EntidadeRepositoryGateway
+                Mudar o nome
+            end note
+
+            class EntidadeController <<Controller>> #gold
+
+            EntidadeController  -up[#gold,thickness=2]-> EntidadeRepositoryGateway : cria <<injesão no use case>> > 
+            EntidadeController  -up[#gold,thickness=2]--> ImplementacaoFluxoChamadaExterna : chama <<injesão no use case>> > 
+        }
+
+        
+    }
+    package "infrastructure/adapter/driver/rest/__nome_modulo__" as restPkg{
+        class EntidadeRestController #RoyalBlue
+        class AcaoEntidadeRequest #gold
+        class AcaoEntidadeResponse #gold
+        class EntidadeDtoMapper #gold
+
+        EntidadeRestController  -up--> ImplementacaoFluxoChamadaExterna : chama negocio >
+        EntidadeRestController  -up[#red,thickness=2]-> EntidadeNegocio : usa <<parametroOuRetorno>> > 
+        EntidadeRestController  -up[#red,thickness=2]-> EntidadeDto : usa <<parametroOuRetorno>> > 
+        EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeRequest : usa <<parametro>> > 
+        EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeResponse : usa <<retorno>> >
+        EntidadeRestController  -up[#gold,thickness=2]-> EntidadeDtoMapper : usa <<retorno>> > 
+
+        EntidadeDtoMapper -up[#gold,thickness=2]--> EntidadeNegocio : converte >
+    }
+    note right of restPkg
+        * Criar subpastas para cada modulo:
+        ** Cliente;
+        ** Pedido;
+        ** Produto;
+        * O controller se mantêm, mas não deve mais ter acesso direto a entidade de negócio.
+        ** __AcaoEntidadeRequest__: objeto que é recebido pelo controller;
+        ** __AcaoEntidadeResponse__: objeto que é devolvido pelo controller;
+        **  Se usar o dto deve conver para __AcaoEntidadeRequest__ e __AcaoEntidadeResponse__.
+        
+    end note
+
+}
+' set legend to have a white background
+skinparam legendBackgroundColor #WhiteSmoke
+
+legend left 
+    |=     |= O que fazer |
+    |<#Gold>| Criar |
+    |<#Red>| Remover |
+    |<#RoyalBlue>| Alterar |
+endlegend
+
+@enduml

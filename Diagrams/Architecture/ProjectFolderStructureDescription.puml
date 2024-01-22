@@ -81,7 +81,11 @@ Eles invocam os use-cases da aplicação através de uma "porta primária" ou "p
 ;
 *********:=rest
 -- Descrição --
-Controllers, Resources, etc.
+Camada que atua como ponte entre as chamadas externas via requisições REST e a camada de negócio.
+;
+**********:= __NOME DO PACOTE__
+-- Descrição --
+Controllers, DTOs de entrada, DTOs de saída e mappers para conversões dos DTOs para entidade de negócio e vice-versa.
 ;
 ********:=driven
 -- Descrição --
@@ -92,6 +96,16 @@ Por exemplo, se a aplicação precisa de uma forma de persistir dados, ela defin
 *********:=persistence
 -- Descrição --
 Contém Repositórios JPA, Entidades e qualquer outra especificidade relacionada ao JPA.
+;
+**********:=entity
+-- Descrição --
+Entidades de banco de dados.
+;
+**********:=repository
+;
+***********:=__NOME DO PACOTE__
+-- Descrição --
+Contém Repositórios JPA e implementações das interfaces gateway.
 ;
 *******:=config
 -- Descrição --

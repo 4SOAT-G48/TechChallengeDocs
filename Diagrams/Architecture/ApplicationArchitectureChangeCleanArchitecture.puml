@@ -88,34 +88,34 @@ frame "Frameworks & Drivers" #A7D7FD {
             EntidadeController  -up[#gold,thickness=2]--> ImplementacaoFluxoChamadaExterna : chama <<injesão no use case>> > 
         }
 
-        
-    }
-    package "infrastructure/adapter/driver/rest/__nome_modulo__" as restPkg{
-        class EntidadeRestController #RoyalBlue
-        class AcaoEntidadeRequest #gold
-        class AcaoEntidadeResponse #gold
-        class EntidadeDtoMapper #gold
+        package "infrastructure/adapter/driver/rest/__nome_modulo__" as restPkg{
+            class EntidadeRestController #RoyalBlue
+            class AcaoEntidadeRequest #gold
+            class AcaoEntidadeResponse #gold
+            class EntidadeDtoMapper #gold
 
-        EntidadeRestController  -up--> ImplementacaoFluxoChamadaExterna : chama negocio >
-        EntidadeRestController  -up[#red,thickness=2]-> EntidadeNegocio : usa <<parametroOuRetorno>> > 
-        EntidadeRestController  -up[#red,thickness=2]-> EntidadeDto : usa <<parametroOuRetorno>> > 
-        EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeRequest : usa <<parametro>> > 
-        EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeResponse : usa <<retorno>> >
-        EntidadeRestController  -up[#gold,thickness=2]-> EntidadeDtoMapper : usa <<retorno>> > 
+            EntidadeRestController  -up--> ImplementacaoFluxoChamadaExterna : chama negocio >
+            EntidadeRestController  -up[#red,thickness=2]-> EntidadeNegocio : usa <<parametroOuRetorno>> > 
+            EntidadeRestController  -up[#red,thickness=2]-> EntidadeDto : usa <<parametroOuRetorno>> > 
+            EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeRequest : usa <<parametro>> > 
+            EntidadeRestController  -up[#gold,thickness=2]-> AcaoEntidadeResponse : usa <<retorno>> >
+            EntidadeRestController  -up[#gold,thickness=2]-> EntidadeDtoMapper : usa <<retorno>> > 
 
-        EntidadeDtoMapper -up[#gold,thickness=2]--> EntidadeNegocio : converte >
+            EntidadeDtoMapper -up[#gold,thickness=2]--> EntidadeNegocio : converte >
+        }
+        note right of restPkg
+            * Criar subpastas para cada modulo:
+            ** Cliente;
+            ** Pedido;
+            ** Produto;
+            * O controller se mantêm, mas não deve mais ter acesso direto a entidade de negócio.
+            ** __AcaoEntidadeRequest__: objeto que é recebido pelo controller;
+            ** __AcaoEntidadeResponse__: objeto que é devolvido pelo controller;
+            **  Se usar o dto deve conver para __AcaoEntidadeRequest__ e __AcaoEntidadeResponse__.
+            
+        end note
     }
-    note right of restPkg
-        * Criar subpastas para cada modulo:
-        ** Cliente;
-        ** Pedido;
-        ** Produto;
-        * O controller se mantêm, mas não deve mais ter acesso direto a entidade de negócio.
-        ** __AcaoEntidadeRequest__: objeto que é recebido pelo controller;
-        ** __AcaoEntidadeResponse__: objeto que é devolvido pelo controller;
-        **  Se usar o dto deve conver para __AcaoEntidadeRequest__ e __AcaoEntidadeResponse__.
-        
-    end note
+    
 
 }
 ' set legend to have a white background

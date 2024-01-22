@@ -1,0 +1,113 @@
+@startuml ApplicationArchitectureAfterCleanArchitecture
+
+'skinparam linetype ortho
+'skinparam linetype polyline
+'left to right direction
+
+title
+Organização das classes
+Visão a partir das camadas da Clean Architecture
+end title
+
+frame "Frameworks & Drivers" #A7D7FD {
+
+    package "Framework Spring" {
+
+        annotation RestController
+        interface JpaRepository
+
+        class BeanConfiguration
+    }
+
+    package "infrastructure/adapter/driven/persistence" {
+        package "entity" {
+            class EntidadeBancoEntity
+        }
+
+        package "repository/__nome_modulo__" {
+
+            interface SpringEntidadeRepository
+        }
+        SpringEntidadeRepository o-- EntidadeBancoEntity : manipula >
+        JpaRepository <.up.. SpringEntidadeRepository : <<extends>> <
+    }
+
+    
+
+    frame "Intefaces Adapters" #A2FDBA {
+
+        frame "Applications Business Rules" #FFA09C {
+            frame "Enterprise Business Rules" as ebrPkg #FCFDBA {
+
+                package "application/__nome_modulo__/model" as modelPkg {
+
+                    class EntidadeNegocio <<Entities>>
+
+                }
+
+            }
+
+            package "application/__nome_modulo__/usecase" as usecasePkg{
+                class NomeAcaoUseCaseImpl <<Use Cases>>
+
+                NomeAcaoUseCaseImpl  ---> EntidadeNegocio : usa\n<<parametro/Retorno>> >
+                'EntidadeNegocio  <--- NomeAcaoUseCaseImpl : usa\n<<parametro/Retorno>> >
+
+            }
+
+            package "application/__nome_modulo__/ports" as portPkg {
+                package "api" as apiPkg{
+                    interface IChamadaExternaPort
+                }
+
+                IChamadaExternaPort  ---> EntidadeNegocio : usa\n<<parametro/Retorno>> >
+                IChamadaExternaPort <|..... NomeAcaoUseCaseImpl : <<implements>>
+
+                package "spi" as spiPkg {
+                    interface IEntidadeRepositoryGateway <<Interface Gateway>>
+
+                    IEntidadeRepositoryGateway  --> EntidadeNegocio : usa\n<<parametro/Retorno>> >
+                    NomeAcaoUseCaseImpl  -up--> IEntidadeRepositoryGateway : usa\n<<parametro/Retorno>> >
+
+                }
+
+                
+            }
+            
+            
+        }
+
+
+        package "infrastructure/adapter/driven/persistence/repository/__nome_modulo__" {
+            class EntidadeRepositoryGateway <<Gateway>>
+
+            EntidadeRepositoryGateway ----> SpringEntidadeRepository : chama >
+            IEntidadeRepositoryGateway <|.. EntidadeRepositoryGateway : <<implements>>
+
+            
+        }
+
+        package "infrastructure/adapter/driver/rest/__nome_modulo__" as restPkg {
+            class EntidadeController
+            class AcaoEntidadeRequest
+            class AcaoEntidadeResponse
+            class EntidadeDtoMapper
+
+            EntidadeController  -up--> NomeAcaoUseCaseImpl : chama negocio >
+            EntidadeController  -down--> AcaoEntidadeRequest : usa <<parametro>> >
+            EntidadeController  -down--> AcaoEntidadeResponse : usa <<retorno>> >
+            EntidadeController  -down--> EntidadeDtoMapper : usa <<conversor>> >
+            EntidadeController o-- RestController : anotado com >
+
+
+            EntidadeDtoMapper -up--> EntidadeNegocio : converte de/para >
+            EntidadeDtoMapper ---> AcaoEntidadeRequest : converte de/para >
+            EntidadeDtoMapper -right--> AcaoEntidadeResponse : converte de/para >
+        }
+
+    }
+
+
+}
+
+@enduml

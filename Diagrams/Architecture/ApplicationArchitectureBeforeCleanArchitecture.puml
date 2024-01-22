@@ -1,0 +1,83 @@
+@startuml ApplicationArchitectureBeforeCleanArchitecture
+
+skinparam linetype ortho
+'left to right direction
+
+title 
+    Organização das classes 
+    Visão a partir das camadas da Clean Architecture
+end title
+
+frame "Frameworks & Drivers" #A7D7FD {
+
+
+    package "infrastructure/adapter/driven/persistence" {
+        package "entity" {
+            class EntidadeBancoEntity
+        }
+        
+        package "repository/__nome_modulo__" {
+            
+            interface SpringEntidadeRepository 
+        }
+        SpringEntidadeRepository o-- EntidadeBancoEntity : manipula >
+    }
+
+    frame "Intefaces Adapters" #A2FDBA {
+
+        frame "Applications Business Rules" #FFA09C {
+            frame "Enterprise Business Rules" #FCFDBA {
+
+                package "application/__nome_modulo__/model" as modelPkg {
+
+                    class EntidadeNegocio <<Entities>>
+
+                }
+
+            }
+
+            package "application/__nome_modulo__/usecase" as usecasePkg{
+                class ImplementacaoFluxoChamadaExterna <<Use Cases>>
+
+                ImplementacaoFluxoChamadaExterna  -up--> EntidadeNegocio : usa <<parametroOuRetorno>> >
+        
+            }
+
+            package "application/__nome_modulo__/ports" {
+                package "api" {
+                    interface ParaChamadaExternaPort 
+                }
+
+                ParaChamadaExternaPort  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+                ParaChamadaExternaPort <|... ImplementacaoFluxoChamadaExterna : implementa <<implements>>
+
+                package "spi" {
+                    interface ParaChamadaInternaPort <<Interface Gateway>>
+
+                    ParaChamadaInternaPort  --> EntidadeNegocio : usa <<parametroOuRetorno>> >
+                    ImplementacaoFluxoChamadaExterna  -up--> ParaChamadaInternaPort : usa <<parametroOuRetorno>> >
+                }
+            }
+            
+        }
+
+
+        package "infrastructure/adapter/driven/persistence/repository/__nome_modulo__" {
+            class EntidadeRepository <<Gateway>>
+
+            EntidadeRepository --> SpringEntidadeRepository : chama >
+            ParaChamadaInternaPort <|.. EntidadeRepository : implementa <<implements>>
+        }
+
+        
+    }
+    
+    package "infrastructure/adapter/driver/rest" {
+        class EntidadesController
+
+        EntidadesController  -up--> ImplementacaoFluxoChamadaExterna : chama negocio >
+        EntidadesController  -up--> EntidadeNegocio : usa <<parametroOuRetorno>> > 
+    }
+
+}
+@enduml

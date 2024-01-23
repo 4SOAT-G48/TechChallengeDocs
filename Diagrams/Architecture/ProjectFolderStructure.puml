@@ -30,8 +30,12 @@ end title
 *******_ adapter
 ********_ driver
 *********_ rest
+*********_ __NOME DO PACOTE__
 ********_ driven
 *********_ persistence
+**********_ entity
+**********_ repository
+***********_ __NOME DO PACOTE__
 *******_ config
 ****_ resources
 *****_ application.properties

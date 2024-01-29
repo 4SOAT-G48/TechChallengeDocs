@@ -1,0 +1,78 @@
+@startuml
+
+skinparam BoxPadding 10
+
+title
+    Sequencia de ações focadas no pagamento
+end title
+
+actor Cliente as cliente
+box "Aplicativo" #LightBlue
+boundary "Resumo pedido" as resumoTela
+boundary "Telas de pagamento" as pagamentoTela
+control "Pedido Controller" as pedidoControl
+control "Pedido Use case" as pedidoUseCase
+entity "Pedido" as entidadePedido
+entity "Pagamento" as entidadePagamento
+control "Webhook" as webhook
+control "Pagamento Controller" as pagamentoControl
+control "Situação pagamento\nUse Case" as pagamentoUseCase
+control "Pagamento Gateway" as pagamentoGateway
+end box
+box "Sistema Externo" #IndianRed
+participant "Mercado Pago" as mercadoPago
+end box
+
+== Conclusão do pedido ==
+activate resumoTela
+autonumber 1.0
+cliente -> resumoTela : Concluí pedido
+resumoTela -> pedidoControl : Transmite os dados do pedido
+pedidoControl -> pedidoUseCase : Chama a camada de negócio
+pedidoUseCase -> entidadePedido ** : Cria pedido
+pedidoUseCase -> entidadePagamento ** : Cria pagamento com situação pendente
+entidadePedido --> pedidoUseCase 
+pedidoUseCase -> pagamentoGateway
+activate mercadoPago
+pagamentoGateway -> mercadoPago --++ : Criar uma ordem
+return OK
+
+pedidoUseCase -> entidadePagamento : Atualiza situação do pagamento para aguardando
+pedidoUseCase --> pedidoControl
+destroy resumoTela
+pedidoControl --> pagamentoTela ** : Retorna para a tela de\ninstruções de pagamento
+deactivate resumoTela
+
+== Retorno da situação do pagamento ==
+... Aguardando cliente efetuar o pagamento ...
+autonumber inc A
+mercadoPago --> webhook : Notifica que teve\natualização do pagamento
+return OK
+webhook -> pagamentoUseCase : Verifica situação do pagamento
+pagamentoUseCase -> pagamentoGateway
+pagamentoGateway -> mercadoPago : https://api.mercadopago.com/v1/payments/[ID]
+return dados do pagamento
+destroy mercadoPago
+pagamentoGateway --> pagamentoUseCase
+
+alt status do pagamento igual a approved
+    pagamentoUseCase -> entidadePagamento : atualiza situação para __aprovado__
+    pagamentoUseCase -> entidadePedido : atualiza situação para __recebido__ 
+else status do pagamento diferente de approved
+    pagamentoUseCase -> entidadePagamento : atualiza situação para __reprovado__
+    pagamentoUseCase -> entidadePedido : atualiza situação para __cancelado__ 
+end
+
+
+== Consulta situação do pedido/pagamento ==
+... de tempos em tempos a tela busca a atualização ...
+
+pagamentoTela -> pagamentoControl : verifica situação do pagamento do pedido
+pagamentoControl -> pagamentoUseCase
+pagamentoUseCase -> entidadePagamento
+return
+pagamentoUseCase --> pagamentoControl
+pagamentoControl --> pagamentoTela
+
+
+@enduml

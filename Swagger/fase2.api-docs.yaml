@@ -1,0 +1,681 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8081
+  description: Generated server url
+tags:
+- name: Pedido em andamento
+  description: Endpoints destinado ao estágio de montagem do pedido
+- name: Listas de produtos para pedido
+  description: Lista de produtos focados para montagem do pedido pelo cliente
+- name: Método de Pagamento
+  description: Endpoints relacionados com métodos de pagamentos
+- name: Acompanhamento da situação do pedido
+  description: Endpoints para atualizar a situação do pedido a medida que vai avançando
+    em cada fase e  para acompanhar os pedidos por situação
+- name: Gerenciamento de Usuários
+  description: Endpoints de criação e listagem de usuário
+- name: Manuteção de Produtos
+  description: Endpoints destinados a manutenção dos produtos usados pela administração
+paths:
+  /api/produtos/{codigo}:
+    get:
+      tags:
+      - Manuteção de Produtos
+      summary: Recupera um produto pelo id
+      operationId: getProduto
+      parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "400":
+          description: Id inválido
+        "200":
+          description: Produto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+        "404":
+          description: Produto não encontrado
+    put:
+      tags:
+      - Manuteção de Produtos
+      operationId: updateProduto
+      parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+      - Manuteção de Produtos
+      operationId: deleteProduto
+      parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: OK
+  /api/pedidosituacao/{codigo}:
+    put:
+      tags:
+      - Acompanhamento da situação do pedido
+      summary: Atualiza situação do pedido
+      operationId: updateSituacaoPedido
+      parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoSituacaoRequest'
+        required: true
+      responses:
+        "404":
+          description: Pedido não Encontrado
+        "200":
+          description: Pedido Atualizado
+  /api/pagamento/situacao:
+    put:
+      tags:
+      - Acompanhamento da situação do pagamento
+      summary: Atualiza situação do pagamento do pedido
+      operationId: updateSituacaoPagamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PagamentoSituacaoRequest'
+        required: true
+      responses:
+        "404":
+          description: Pagamento não Encontrado
+        "200":
+          description: Situação do Pagamento Atualizado
+  /api/produtos:
+    get:
+      tags:
+      - Manuteção de Produtos
+      summary: Recupera lista de produtos
+      operationId: getProdutos
+      responses:
+        "200":
+          description: Produtos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponse'
+    post:
+      tags:
+      - Manuteção de Produtos
+      operationId: createProduto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdutoRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/pedidoemandamento:
+    post:
+      tags:
+      - Pedido em andamento
+      summary: Cria o pedido
+      operationId: montagemPedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoCriacaoRequest'
+        required: true
+      responses:
+        "400":
+          description: Pedido inválido
+        "200":
+          description: Pedido Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPedidoEmAndamentoPort'
+  /api/clientes:
+    post:
+      tags:
+      - Gerenciamento de Usuários
+      summary: Adiciona novo usuário
+      operationId: criarCliente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+        required: true
+      responses:
+        "400":
+          description: Usuário duplicado
+        "200":
+          description: Usuário adicionado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+  /saudacoes:
+    get:
+      tags:
+      - saudacoes-controller
+      operationId: greeting
+      parameters:
+      - name: nome
+        in: query
+        required: false
+        schema:
+          type: string
+          default: Mundo
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Saudacoes'
+  /geraNumeroPedido:
+    get:
+      tags:
+      - saudacoes-controller
+      operationId: geraNumeroPedido
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/produtos/populaprodutosiniciais:
+    get:
+      tags:
+      - Manuteção de Produtos
+      operationId: getGeraProdutosIniciais
+      responses:
+        "200":
+          description: OK
+  /api/produto/categoria/{categoria}:
+    get:
+      tags:
+      - Listas de produtos para pedido
+      summary: Recupera lista de produtos por categoria
+      operationId: getPorCategoria
+      parameters:
+      - name: categoria
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - LANCHE
+          - ACOMPANHAMENTO
+          - BEBIDA
+          - SOBREMESA
+      responses:
+        "200":
+          description: Produtos encontrados para a categoria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+  /api/produto/categoria/disponiveis/{categoria}:
+    get:
+      tags:
+      - Listas de produtos para pedido
+      summary: Recupera lista de produtos com situação de DISPONIVEL por categoria
+      operationId: getPorCategoriaDisponivel
+      parameters:
+      - name: categoria
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - LANCHE
+          - ACOMPANHAMENTO
+          - BEBIDA
+          - SOBREMESA
+      responses:
+        "200":
+          description: Produtos  disponíveis encontrados para a categoria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produto'
+  /api/pedidosituacao:
+    get:
+      tags:
+      - Acompanhamento da situação do pedido
+      summary: Recupera a lista de pedidos por situacao
+      operationId: getPedidosPorSituacao
+      parameters:
+      - name: situacoes
+        in: query
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - EM_ANDAMENTO
+            - RECEBIDO
+            - EM_PREPARACAO
+            - PRONTO
+            - EM_ENTREGA
+            - FINALIZADO
+      responses:
+        "200":
+          description: Pedidos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+  /api/pedidosituacao/monitor:
+    get:
+      tags:
+      - Acompanhamento da situação do pedido
+      summary: Recupera a lista de pedidos com situações para serem mostradas no monitor
+        de acompanhamento do cliente
+      operationId: getPedidosMonitor
+      responses:
+        "200":
+          description: Pedidos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pedido'
+  /api/pagamento/situacao/{codigo}:
+    get:
+      tags:
+      - Acompanhamento da situação do pagamento
+      summary: Recupera a situação do pagamento
+      operationId: getSituacaoPagamento
+      parameters:
+      - name: codigo
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: Pagamento encontrado e situação devolvida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PagamentoSituacaoResponse'
+  /api/metodospagamento:
+    get:
+      tags:
+      - Método de Pagamento
+      summary: Recupera lista de metodos de pagamentos
+      operationId: getMetodos
+      responses:
+        "200":
+          description: Metodos de pagamentos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetodoPagamentoResponse'
+  /api/clientes/{cpf}:
+    get:
+      tags:
+      - Gerenciamento de Usuários
+      summary: Busca usuário por cpf
+      operationId: getCliente
+      parameters:
+      - name: cpf
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+components:
+  schemas:
+    ProdutoRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        categoria:
+          type: string
+          enum:
+          - LANCHE
+          - ACOMPANHAMENTO
+          - BEBIDA
+          - SOBREMESA
+        preco:
+          type: number
+          format: double
+        descricao:
+          type: string
+        situacao:
+          type: string
+          enum:
+          - DISPONIVEL
+          - INDISPONIVEL
+        imagens:
+          type: array
+          items:
+            type: string
+    PedidoSituacaoRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        situacao:
+          type: string
+          enum:
+          - EM_ANDAMENTO
+          - RECEBIDO
+          - EM_PREPARACAO
+          - PRONTO
+          - EM_ENTREGA
+          - FINALIZADO
+    PagamentoSituacaoRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        situacaoPagamento:
+          type: string
+          enum:
+          - PENDENTE
+          - AGUARDANDO_PAGAMENTO
+          - APROVADO
+          - REPROVADO
+    MetodoPagamentoConsultaRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+    PagamentoCriacaoRequest:
+      type: object
+      properties:
+        metodoPagamento:
+          $ref: '#/components/schemas/MetodoPagamentoConsultaRequest'
+    PedidoCriacaoRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        cpfCliente:
+          type: string
+        situacao:
+          type: string
+        identificacao:
+          type: string
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoItemRequest'
+        pagamento:
+          $ref: '#/components/schemas/PagamentoCriacaoRequest'
+        total:
+          type: number
+          format: double
+    PedidoItemRequest:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        produto:
+          $ref: '#/components/schemas/ProdutoRequest'
+        quantidade:
+          type: integer
+          format: int32
+        precoUnitario:
+          type: number
+          format: double
+        observacao:
+          type: string
+    IPedidoEmAndamentoPort:
+      type: object
+    Cliente:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        cpf:
+          type: string
+        email:
+          type: string
+    Saudacoes:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        conteudo:
+          type: string
+    ProdutoResponse:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        categoria:
+          type: string
+          enum:
+          - LANCHE
+          - ACOMPANHAMENTO
+          - BEBIDA
+          - SOBREMESA
+        preco:
+          type: number
+          format: double
+        descricao:
+          type: string
+        situacao:
+          type: string
+          enum:
+          - DISPONIVEL
+          - INDISPONIVEL
+        imagens:
+          type: array
+          items:
+            type: string
+    Imagem:
+      type: object
+      properties:
+        url:
+          type: string
+    Nome:
+      type: object
+      properties:
+        nome:
+          type: string
+    Produto:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          $ref: '#/components/schemas/Nome'
+        categoria:
+          type: string
+          enum:
+          - LANCHE
+          - ACOMPANHAMENTO
+          - BEBIDA
+          - SOBREMESA
+        preco:
+          type: number
+          format: double
+        descricao:
+          type: string
+        situacao:
+          type: string
+          enum:
+          - DISPONIVEL
+          - INDISPONIVEL
+        imagens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Imagem'
+    MetodoPagamento:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        tipoPagamento:
+          type: string
+          enum:
+          - MERCADO_PAGO
+        urlImagem:
+          type: string
+    Pagamento:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        metodoPagamento:
+          $ref: '#/components/schemas/MetodoPagamento'
+        situacaoPagamento:
+          type: string
+          enum:
+          - PENDENTE
+          - AGUARDANDO_PAGAMENTO
+          - APROVADO
+          - REPROVADO
+    Pedido:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        cliente:
+          $ref: '#/components/schemas/Cliente'
+        situacao:
+          type: string
+          enum:
+          - EM_ANDAMENTO
+          - RECEBIDO
+          - EM_PREPARACAO
+          - PRONTO
+          - EM_ENTREGA
+          - FINALIZADO
+        identificacao:
+          type: string
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoItem'
+        pagamento:
+          $ref: '#/components/schemas/Pagamento'
+        dataCriacao:
+          type: string
+          format: date-time
+        dataAtualizacao:
+          type: string
+          format: date-time
+    PedidoItem:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        produto:
+          $ref: '#/components/schemas/Produto'
+        quantidade:
+          type: integer
+          format: int32
+        precoUnitario:
+          type: number
+          format: double
+        observacao:
+          type: string
+        total:
+          type: number
+          format: double
+    PagamentoSituacaoResponse:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        situacaoPagamento:
+          type: string
+          enum:
+          - PENDENTE
+          - AGUARDANDO_PAGAMENTO
+          - APROVADO
+          - REPROVADO
+    MetodoPagamentoResponse:
+      type: object
+      properties:
+        codigo:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        tipoPagamento:
+          type: string
+          enum:
+          - MERCADO_PAGO
+        urlImagem:
+          type: string

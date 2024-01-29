@@ -1,0 +1,1418 @@
+{
+	"info": {
+		"_postman_id": "8cd4538d-df73-4d5e-bb62-2beab66f0ea0",
+		"name": "4SOAT-Grupo48",
+		"description": "This template contains a boilerplate for documentation that you can quickly customize and reuse.\n\n### How to use this template:\n\n- Replace the content given brackets (()) with your API's details.\n- Tips are formatted in `codespan` - feel free to read and remove them.\n    \n\n---\n\n`Start with a brief overview of what your API offers.`\n\nThe ((product name)) provides many API products, tools, and resources that enable you to ((add product value here)).\n\n`You can also list the APIs you offer, link to the relevant pages, or do both in this section.`\n\n## **Getting started guide**\n\n`List the steps or points required to start using your APIs. Make sure to cover everything required to reach success with your API as quickly as possible.`\n\nTo start using the ((add APIs here)), you need to -\n\n`The points given below are from The Postman API's documentation. You can reference it to write your own getting started guide.`\n\n- You must use a valid API Key to send requests to the API endpoints. You can get your API key from Postman's [integrations dashboard](https://go.postman.co/settings/me/api-keys).\n- The API has [rate and usage limits](https://postman.postman.co/workspace/Collection-Templates~6311738d-2e70-441f-ae12-78caf078c5b7/collection/22517504-e9c28f47-1253-44af-a2f3-20dce4da1f18?ctx=documentation#rate-and-usage-limits).\n- The API only responds to HTTPS-secured communications. Any requests sent via HTTP return an HTTP 301 redirect to the corresponding HTTPS resources.\n- The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.\n    \n\n## Authentication\n\n`Add details on the authorization keys/tokens required, steps that cover how to get them, and the relevant error codes.`\n\nThe ((product name)) API uses ((add your API's authorization type)) for authentication.\n\n`The details given below are from the Postman API's documentation. You can reference it to write your own authentication section.`\n\nPostman uses API keys for authentication. You can generate a Postman API key in the [API keys](https://postman.postman.co/settings/me/api-keys) section of your Postman account settings.\n\nYou must include an API key in each request to the Postman API with the X-Api-Key request header.\n\n### Authentication error response\n\nIf an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.\n\n## Rate and usage limits\n\n`Use this section to cover your APIs' terms of use. Include API limits, constraints, and relevant error codes, so consumers understand the permitted API usage and practices.`\n\n`The example given below is from The Postman API's documentation. Use it as a reference to write your APIs' terms of use.`\n\nAPI access rate limits apply at a per-API key basis in unit time. The limit is 300 requests per minute. Also, depending on your plan, you may have usage limits. If you exceed either limit, your request will return an HTTP 429 Too Many Requests status code.\n\nEach API response returns the following set of headers to help you identify your use status:\n\n| Header | Description |\n| --- | --- |\n| `X-RateLimit-Limit` | The maximum number of requests that the consumer is permitted to make per minute. |\n| `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window. |\n| `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds. |\n\n### 503 response\n\nAn HTTP `503` response from our servers indicates there is an unexpected spike in API access traffic. The server is usually operational within the next five minutes. If the outage persists or you receive any other form of an HTTP `5XX` error, [contact support](https://support.postman.com/hc/en-us/requests/new/).\n\n### **Need some help?**\n\n`Add links that customers can refer to whenever they need help.`\n\nIn case you have questions, go through our tutorials ((link to your video or help documentation here)). Or visit our FAQ page ((link to the relevant page)).\n\nOr you can check out our community forum, there’s a good chance our community has an answer for you. Visit our developer forum ((link to developer forum)) to review topics, ask questions, and learn from others.\n\n`You can also document or add links to libraries, code examples, and other resources needed to make a request.`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9454544",
+		"_collection_link": "https://techchallenge-fiap-turma4soat-g48.postman.co/workspace/Team-Workspace~fbe35dc4-bd06-4fee-89f7-8318f5b6131c/collection/9454544-8cd4538d-df73-4d5e-bb62-2beab66f0ea0?action=share&source=collection_link&creator=9454544"
+	},
+	"item": [
+		{
+			"name": "Fluxo - Administração",
+			"item": [
+				{
+					"name": "Carga inicial de produtos",
+					"item": [
+						{
+							"name": "Popula tabela de produtos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos/populaprodutosiniciais",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos",
+										"populaprodutosiniciais"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CRUD de Produtos",
+					"item": [
+						{
+							"name": "Busca todos os produtos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Busca um produto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos/a9392e47-73aa-44a3-92d8-df991743eecd",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos",
+										"a9392e47-73aa-44a3-92d8-df991743eecd"
+									]
+								},
+								"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+							},
+							"response": []
+						},
+						{
+							"name": "Cria produto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nome\": \"ab\",\n    \"descricao\": \"Batatas para um grupo todo. Teste\",\n    \"categoria\": \"ACOMPANHAMENTO\",\n    \"preco\": 75.90,\n    \"situacao\": \"INDISPONIVEL\",\n    \"imagens\": [\n        \"https://img.elo7.com.br/product/main/2E0CDC5/500-pcs-embalagem-batata-frita-linha-black-delivery.jpg\"\n    ]\n\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos"
+									]
+								},
+								"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+							},
+							"response": []
+						},
+						{
+							"name": "Atualiza produto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nome\": \"Batata frita (2000g)\",\n    \"categoria\": \"ACOMPANHAMENTO\",\n    \"preco\": 75.9,\n    \"descricao\": \"Batatas para um grupo todo.\",\n    \"situacao\": \"INDISPONIVEL\",\n    \"imagens\" : [\n        \"https://img.elo7.com.br/product/main/2E0CDC5/500-pcs-embalagem-batata-frita-linha-black-delivery.jpg\",\n        \"http://maisteste.com.br\"\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos/0ba395dd-c04e-4f93-b4e0-53d0f113f6d0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos",
+										"0ba395dd-c04e-4f93-b4e0-53d0f113f6d0"
+									]
+								},
+								"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+							},
+							"response": []
+						},
+						{
+							"name": "Apaga produto",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/produtos/98078f0c-2738-464e-9db7-81018ea6a31e",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produtos",
+										"98078f0c-2738-464e-9db7-81018ea6a31e"
+									]
+								},
+								"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+							},
+							"response": []
+						}
+					],
+					"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/)."
+				}
+			]
+		},
+		{
+			"name": "Fluxo - Pedido",
+			"item": [
+				{
+					"name": "Passo 1 - Cliente - Identificação do cliente",
+					"item": [
+						{
+							"name": "Novo Usuário",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nome\": \"Fulano de tal\",\n  \"cpf\": \"1234567890\",\n  \"email\": \"f.tal@grupo48.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/clientes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login por cpf",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/clientes/1234567890",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"clientes",
+										"1234567890"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passo 2 - Cliente - Criação de Pedido",
+					"item": [
+						{
+							"name": "Lista Produtos Disponiveis Por Categoria LANCHE",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produto/categoria/disponiveis/LANCHE",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produto",
+										"categoria",
+										"disponiveis",
+										"LANCHE"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Lista Produtos Disponiveis Por Categoria ACOMPANHAMENTO Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produto/categoria/disponiveis/ACOMPANHAMENTO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produto",
+										"categoria",
+										"disponiveis",
+										"ACOMPANHAMENTO"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Lista Produtos Disponiveis Por Categoria BEBIDA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produto/categoria/disponiveis/BEBIDA",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produto",
+										"categoria",
+										"disponiveis",
+										"BEBIDA"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Lista Produtos Disponiveis Por Categoria SOBREMESA",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/produto/categoria/disponiveis/SOBREMESA",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"produto",
+										"categoria",
+										"disponiveis",
+										"SOBREMESA"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Lista Metodos de Pagamento",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/metodospagamento",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"metodospagamento"
+									]
+								},
+								"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+							},
+							"response": []
+						},
+						{
+							"name": "Criação do pedido",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"cpfCliente\": \"1234567890\",\n  \"situacao\": \"EM_ANDAMENTO\",\n  \"itens\": [\n    {\n      \"produto\": {\n        \"codigo\": \"f85c9547-8d2a-4d5d-bb6e-42982f2bd4fc\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 30,\n      \"observacao\": \"\"\n    },\n    {\n      \"produto\": {\n        \"codigo\": \"27efa5ab-b9f2-4968-b19e-267290710aee\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 17,\n      \"observacao\": \"\"\n    },\n    {\n      \"produto\": {\n        \"codigo\": \"355b99e5-fd78-4ff7-b45e-ff09ddbf765f\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 5,\n      \"observacao\": \"\"\n    }\n  ],\n  \"pagamento\": {\n    \"metodoPagamento\": {\n      \"codigo\": \"22586bb6-0f10-44eb-a25e-d022fba80f45\"\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidoemandamento",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidoemandamento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Busca pedidos pela situacao EM_ANDAMENTO",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=EM_ANDAMENTO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "EM_ANDAMENTO"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passo 3 - Processo de pagamento",
+					"item": [
+						{
+							"name": "Pagamento confirmado muda a situação do pedido",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"situacao\": \"RECEBIDO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/72554a19-4f10-4c24-8295-6d4763abaa6f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"72554a19-4f10-4c24-8295-6d4763abaa6f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pagamento aguardando",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"codigo\": \"1baf138a-f413-4a86-a229-12c79a8079e7\",\n    \"situacaoPagamento\": \"AGUARDANDO_PAGAMENTO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pagamento aprovado",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"codigo\": \"1baf138a-f413-4a86-a229-12c79a8079e7\",\n    \"situacaoPagamento\": \"APROVADO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pagamento reprovado",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"codigo\": \"1baf138a-f413-4a86-a229-12c79a8079e7\",\n    \"situacaoPagamento\": \"REPROVADO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pagamento busca situação",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao/1baf138a-f413-4a86-a229-12c79a8079e7",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao",
+										"1baf138a-f413-4a86-a229-12c79a8079e7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passo 4 - Cozinha - Recebimento, preparo e passagem para o atendente",
+					"item": [
+						{
+							"name": "Busca pedidos pela situacao RECEBIDO",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "RECEBIDO"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Muda a situação do pedido para EM_PREPARACAO",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"situacao\": \"EM_PREPARACAO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/72554a19-4f10-4c24-8295-6d4763abaa6f",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"72554a19-4f10-4c24-8295-6d4763abaa6f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Busca pedidos pela situacao EM_PREPARACAO",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "RECEBIDO"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Muda a situação do pedido para PRONTO",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"situacao\": \"PRONTO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/68284ef5-9d13-4cb8-955d-173401b6ab83",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"68284ef5-9d13-4cb8-955d-173401b6ab83"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passo 5 - Atendente - Pronto, em entrega e Finalizado",
+					"item": [
+						{
+							"name": "Busca pedidos pela situacao PRONTO",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "RECEBIDO"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Muda a situação do pedido para EM_ENTREGA",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"situacao\": \"EM_ENTREGA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/68284ef5-9d13-4cb8-955d-173401b6ab83",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"68284ef5-9d13-4cb8-955d-173401b6ab83"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Busca pedidos pela situacao EM_ENTREGA",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "RECEBIDO"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Muda a situação do pedido para FINALIZADO",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"situacao\": \"PRONTO\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/68284ef5-9d13-4cb8-955d-173401b6ab83",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"68284ef5-9d13-4cb8-955d-173401b6ab83"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Passos 3 a 4 - Monitor de acompanhamento do cliente",
+					"item": [
+						{
+							"name": "Busca pedidos para mostra no monitor de acompanhamento do cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO,EM_PREPARACAO,EM_ENTREGA",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao"
+									],
+									"query": [
+										{
+											"key": "situacoes",
+											"value": "RECEBIDO,EM_PREPARACAO,EM_ENTREGA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fase2 - Busca pedidos para mostra no monitor de acompanhamento do cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pedidosituacao/monitor",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pedidosituacao",
+										"monitor"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "Fluxo com os endpoits principais"
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Get todos os produtos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/produtos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produtos"
+							]
+						},
+						"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+					},
+					"response": []
+				},
+				{
+					"name": "Create produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Batata frita (2000g)\",\n    \"descricao\": \"Batatas para um grupo todo.\",\n    \"categoria\": \"ACOMPANHAMENTO\",\n    \"preco\": 75.90,\n    \"situacao\": \"INDISPONIVEL\",\n    \"imagens\": [\n        \"https://img.elo7.com.br/product/main/2E0CDC5/500-pcs-embalagem-batata-frita-linha-black-delivery.jpg\"\n    ]\n\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/produtos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produtos"
+							]
+						},
+						"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Update produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Batata frita (2000g)\",\n    \"categoria\": \"ACOMPANHAMENTO\",\n    \"preco\": 75.9,\n    \"descricao\": \"Batatas para um grupo todo.\",\n    \"situacao\": \"INDISPONIVEL\",\n    \"imagens\" : [\n        \"https://img.elo7.com.br/product/main/2E0CDC5/500-pcs-embalagem-batata-frita-linha-black-delivery.jpg\",\n        \"http://maisteste.com.br\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/produtos/0ba395dd-c04e-4f93-b4e0-53d0f113f6d0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produtos",
+								"0ba395dd-c04e-4f93-b4e0-53d0f113f6d0"
+							]
+						},
+						"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/produtos/5ecc839e-9707-43d6-b35c-c5aabc2622d4",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produtos",
+								"5ecc839e-9707-43d6-b35c-c5aabc2622d4"
+							]
+						},
+						"description": "Creates a collection using the [Postman Collection v2 schema format](https://schema.postman.com/json/collection/v2.1.0/docs/index.html). Include a `collection` object in the request body that contains the following required properties:\n\n*   `info` — An **object** that contains the following properties:\n    *   `name` — A **string** value that contains the collection's name.\n    *   `schema` — A **string** that contains a URL to the collection's schema. For example, the `https://schema.getpostman.com/collection/v1` URL.\n*   `item` — An **object** that contains the HTTP request and response information.\n    *   `request` — An **object** that contains the collection's request information. For a complete list of values, refer to the `definitions.request` entry in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json). If you pass an empty object for this value, the system defaults to an untitled GET request.\n\n**Note:**\n\n*   For a complete list of available property values for this endpoint, use the following references available in the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json):\n    *   `info` object — Use the `definitions.info` entry.\n    *   `item` object — Use the `definitions.items` entry.\n*   For all other possible values, refer to the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get um produto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/produtos/0ba395dd-c04e-4f93-b4e0-53d0f113f6d0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produtos",
+								"0ba395dd-c04e-4f93-b4e0-53d0f113f6d0"
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				}
+			],
+			"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/)."
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Create Usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"André Laus\",\n  \"cpf\": \"1234567890\",\n  \"email\": \"laus@algumacoisa.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/clientes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cliente Por Cpf",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/clientes/1234567890",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"clientes",
+								"1234567890"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos para pedido",
+			"item": [
+				{
+					"name": "Get Produtos Por Categoria",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/produto/categoria/ACOMPANHAMENTO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produto",
+								"categoria",
+								"ACOMPANHAMENTO"
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "{{workspaceId}}",
+									"description": "Optional. A workspace ID.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Produtos Disponiveis Por Categoria",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/produto/categoria/disponiveis/ACOMPANHAMENTO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"produto",
+								"categoria",
+								"disponiveis",
+								"ACOMPANHAMENTO"
+							],
+							"query": [
+								{
+									"key": "workspace",
+									"value": "{{workspaceId}}",
+									"description": "Optional. A workspace ID.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets all of your [collections](https://www.getpostman.com/docs/collections). The response includes all of your subscribed collections."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Create do pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cpfCliente\": \"1234567890\",\n  \"situacao\": \"EM_ANDAMENTO\",\n  \"itens\": [\n    {\n      \"produto\": {\n        \"codigo\": \"9bc11e5f-a5f9-4e00-8844-604ce3b74daa\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 35,\n      \"observacao\": \"\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pedidoemandamento",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pedidoemandamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create do pedido com dois itens",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cpfCliente\": \"1234567890\",\n  \"situacao\": \"EM_ANDAMENTO\",\n  \"itens\": [\n    {\n      \"produto\": {\n        \"codigo\": \"9bc11e5f-a5f9-4e00-8844-604ce3b74daa\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 35,\n      \"observacao\": \"\"\n    },\n    {\n      \"produto\": {\n        \"codigo\": \"f1a8e4f9-f02e-4255-aec3-9ccc25a9acb5\"\n      },\n      \"quantidade\": 1,\n      \"precoUnitario\": 45,\n      \"observacao\": \"\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pedidoemandamento",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pedidoemandamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a situação do pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"situacao\": \"RECEBIDO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pedidosituacao/68284ef5-9d13-4cb8-955d-173401b6ab83",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pedidosituacao",
+								"68284ef5-9d13-4cb8-955d-173401b6ab83"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pedidos pela situacao",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=EM_PREPARACAO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pedidosituacao"
+							],
+							"query": [
+								{
+									"key": "situacoes",
+									"value": "EM_PREPARACAO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pedidos por várias situações",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/pedidosituacao?situacoes=RECEBIDO,EM_PREPARACAO,PRONTO,EM_ENTREGA",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pedidosituacao"
+							],
+							"query": [
+								{
+									"key": "situacoes",
+									"value": "RECEBIDO,EM_PREPARACAO,PRONTO,EM_ENTREGA"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Outros",
+			"item": [
+				{
+					"name": "Get saudacoes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/saudacoes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"saudacoes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-API-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8081"
+		}
+	]
+}

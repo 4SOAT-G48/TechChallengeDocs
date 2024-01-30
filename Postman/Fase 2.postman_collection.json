@@ -495,6 +495,57 @@
 					"name": "Passo 3 - Processo de pagamento",
 					"item": [
 						{
+							"name": "Pagamento busca situação",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao/1baf138a-f413-4a86-a229-12c79a8079e7",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao",
+										"1baf138a-f413-4a86-a229-12c79a8079e7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "WebHook mercado pago - fake",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/pagamento/situacao/mercadopago/notification?topic=payment&id=1234",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"pagamento",
+										"situacao",
+										"mercadopago",
+										"notification"
+									],
+									"query": [
+										{
+											"key": "topic",
+											"value": "payment"
+										},
+										{
+											"key": "id",
+											"value": "1234"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Pagamento confirmado muda a situação do pedido",
 							"request": {
 								"method": "PUT",
@@ -529,7 +580,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"codigo\": \"1baf138a-f413-4a86-a229-12c79a8079e7\",\n    \"situacaoPagamento\": \"AGUARDANDO_PAGAMENTO\"\n}",
+									"raw": "{\n    \"codigo\": \"3855b70e-9e08-4935-833c-3ba7532b4497\",\n    \"situacaoPagamento\": \"AGUARDANDO_PAGAMENTO\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -601,26 +652,6 @@
 										"api",
 										"pagamento",
 										"situacao"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Pagamento busca situação",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{baseUrl}}/api/pagamento/situacao/1baf138a-f413-4a86-a229-12c79a8079e7",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"api",
-										"pagamento",
-										"situacao",
-										"1baf138a-f413-4a86-a229-12c79a8079e7"
 									]
 								}
 							},

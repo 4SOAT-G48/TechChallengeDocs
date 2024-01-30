@@ -34,6 +34,8 @@ paths:
           type: string
           format: uuid
       responses:
+        "404":
+          description: Produto não encontrado
         "400":
           description: Id inválido
         "200":
@@ -42,8 +44,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProdutoResponse'
-        "404":
-          description: Produto não encontrado
     put:
       tags:
       - Manuteção de Produtos
@@ -102,10 +102,10 @@ paths:
               $ref: '#/components/schemas/PedidoSituacaoRequest'
         required: true
       responses:
-        "404":
-          description: Pedido não Encontrado
         "200":
           description: Pedido Atualizado
+        "404":
+          description: Pedido não Encontrado
   /api/pagamento/situacao:
     put:
       tags:
@@ -119,10 +119,10 @@ paths:
               $ref: '#/components/schemas/PagamentoSituacaoRequest'
         required: true
       responses:
-        "404":
-          description: Pagamento não Encontrado
         "200":
           description: Situação do Pagamento Atualizado
+        "404":
+          description: Pagamento não Encontrado
   /api/produtos:
     get:
       tags:
@@ -166,14 +166,14 @@ paths:
               $ref: '#/components/schemas/PedidoCriacaoRequest'
         required: true
       responses:
-        "400":
-          description: Pedido inválido
         "200":
           description: Pedido Criado
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/IPedidoEmAndamentoPort'
+        "400":
+          description: Pedido inválido
   /api/clientes:
     post:
       tags:
@@ -344,6 +344,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PagamentoSituacaoResponse'
+  /api/pagamento/situacao/mercadopago/notification:
+    get:
+      tags:
+      - Acompanhamento da situação do pagamento
+      operationId: notificationMercadoPago
+      parameters:
+      - name: topic
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
   /api/metodospagamento:
     get:
       tags:

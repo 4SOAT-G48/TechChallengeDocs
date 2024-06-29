@@ -1,0 +1,133 @@
+@startuml MicroservicesPedidos
+!include ../Commons/CleanArchitecture.puml
+
+rectangle "pedido-service" as PedidoService {
+
+frame "Frameworks & Drivers" <<FrameworksAndDrivers>> {
+        together {
+            interface JpaRepository<T, ID>
+            annotation Repository
+        }
+        together {
+            annotation Table
+            annotation Entity
+        }
+        together {
+            annotation RestController
+            annotation RequestMapping
+        }
+
+    node Cliente as ClienteNode {
+    
+        frame "Cliente Intefaces Adapters" <<IntefacesAdapters>> {
+
+            frame "Cliente Applications Business Rules" <<ApplicationsBusinessRules>> {
+
+                frame "Cliente Enterprise Business Rules" <<EnterpriseBusinessRules>> {
+
+                    class application.domain.model.Cliente as "Cliente" {
+                        id
+                    }
+                    
+                }
+
+                class application.service.ClienteUsecaseImpl as "ClienteUsecaseImpl" {
+                }
+
+                class application.service.port.in.IClientePort as "IClientePort" {
+                }
+
+                class application.service.port.out.IClienteRepositoryGateway as "IClienteRepositoryGateway" {
+                }
+
+                Cliente <-- IClientePort
+                Cliente <-- IClienteRepositoryGateway
+                IClientePort <|-- ClienteUsecaseImpl
+                IClienteRepositoryGateway <-- ClienteUsecaseImpl
+            }
+
+            class infra.adapter.db.ClienteEntity as "ClienteEntity" {
+            }
+
+            class infra.adapter.db.ClienteRepositoryGateway as "ClienteRepositoryGateway" {
+            }
+
+            class infra.adapter.db.SpringClienteRepository as "SpringClienteRepository"<ClienteEntity, UUID> {
+            }
+
+            IClienteRepositoryGateway <|-- ClienteRepositoryGateway
+            Cliente <-- ClienteEntity
+            ClienteEntity <- SpringClienteRepository
+            ClienteEntity o--- Table :  : Anotado com >
+            ClienteEntity o--- Entity :  : Anotado com >
+            SpringClienteRepository <-- ClienteRepositoryGateway
+            JpaRepository <|.. SpringClienteRepository
+            SpringClienteRepository o-- Repository : Anotado com >
+
+            class infra.adapter.rest.ClienteController as "ClienteController" {
+            }
+
+            IClientePort <-- ClienteController : clientePort
+            Cliente <-- ClienteController
+            ClienteController o-- RestController
+            ClienteController o-- RequestMapping
+        }
+    }
+
+    node Produto as ProdutoNode {
+
+        frame "Produto Intefaces Adapters" <<IntefacesAdapters>> {
+
+            frame "Produto Applications Business Rules" <<ApplicationsBusinessRules>> {
+                
+                frame "Produto Enterprise Business Rules" <<EnterpriseBusinessRules>> {
+                    class application.domain.model.Produto as "Produto" {
+                    }
+                    
+                    enum application.domain.model.Categoria as "Categoria" { 
+                        LANCHE
+                        ACOMPANHAMENTO
+                        BEBIDA
+                        SOBREMESA
+                    }
+
+                    enum application.domain.model.SituacaoProduto as "SituacaoProduto" {
+                        DISPONIVEL
+                        INDISPONIVEL
+                    }
+
+                    Produto --> "1" Categoria : categoria
+                    Produto --> "1" SituacaoProduto : situacao
+                }
+            }
+        }
+    }
+
+    Node Pedido as PedidoNode {
+
+
+        frame "Pedidos Intefaces Adapters" <<IntefacesAdapters>> {
+
+            frame "Pedidos Applications Business Rules" <<ApplicationsBusinessRules>> {
+                
+
+                frame "Pedidos Enterprise Business Rules" <<EnterpriseBusinessRules>> {
+                    class application.domain.model.Pedido as "Pedido"{
+                    }
+                    class application.domain.model.PedidoItem as "PedidoItem" {
+                    }
+                    enum application.domain.model.SituacaoPedido as "SituacaoPedido" {
+                    }
+
+                    Pedido --> "1" SituacaoPedido :situacao
+                    Pedido *--> "1..*   " PedidoItem :itens
+                    Cliente::id <... Pedido
+
+                }
+            }
+        }
+    }
+
+}
+}
+@enduml

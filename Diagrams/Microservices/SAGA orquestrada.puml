@@ -1,0 +1,105 @@
+@startuml SAGA_orquestrada
+
+!theme reddress-lightorange
+
+!include ../Commons/Skinparam.puml
+
+
+skinparam queue {
+    backgroundcolor #Orange
+}
+skinparam database {
+    backgroundcolor #SteelBlue
+}
+
+skinparam nodesep 80
+skinparam ranksep 80
+
+title
+    Jornada de pedido
+    SAGA - Orquestrada
+end title
+
+together {
+    Actor Cliente
+    Node UI
+    Node "API Gateway" as ApiGateway
+}
+
+together{
+    Node "orquestrador-service" as OrquestradorService 
+    queue "Pedido Orquestrador" as OrquestradorQueue
+}
+
+together {
+    Node "pedido-service" as PedidoService
+    database "db Pedido" as PedidoDb
+    PedidoDb <- PedidoService
+    queue "Pedido Registrado" as PedidoRegistradoQueue
+    queue "Pedido Atualiza Situacao" as PedidoAtualizaSituacaoQueue
+}
+
+together {
+    Node "pagamento-service" as PagamentoService
+    database "db Pagamento" as PagamentoDb
+    PagamentoDb <- PagamentoService
+    Node "Gateway de pagamento" as GatewayPagamento #IndianRed
+    queue "Pagamentos" as PagamentoQueue
+}
+
+together {
+    Node "producao-service" as ProducaoService
+    database "db Producao" as ProducaoDb
+    ProducaoDb <-down- ProducaoService
+    queue "Producao" as ProducaoQueue
+}
+
+
+Cliente -right--> UI
+UI ---> ApiGateway:Registra o pedido
+ApiGateway --> PedidoService 
+
+PedidoService -[#Orange]-> PedidoRegistradoQueue:Registra pedido
+
+PedidoRegistradoQueue <-[#Orange,dashed]- OrquestradorService:Consome o pedido registrado
+OrquestradorService -[#Orange]-> PagamentoQueue:Registra pagamento pendente
+
+OrquestradorService -[#Orange]-> PedidoAtualizaSituacaoQueue:Atualiza como aguardando pagamento
+
+PagamentoQueue <-[#Orange,dashed]- PagamentoService:Recebe informação de pagamento pendente
+
+PagamentoService --> GatewayPagamento:Envia informação para cobrança
+GatewayPagamento --> PagamentoService:Retorna informação sobre pagamento
+
+PagamentoService -[#Orange]--> OrquestradorQueue:Pagamento efetuado
+PagamentoService -[#Orange]--> OrquestradorQueue:Falha no pagamento
+
+OrquestradorQueue <-[#Orange,dashed]- OrquestradorService:Qualquer Mensagem
+
+OrquestradorService -[#Orange]--> ProducaoQueue: Envia para a fila de producao
+OrquestradorService -[#Orange]-> PedidoAtualizaSituacaoQueue:Atualiza como em preparacao
+
+PedidoAtualizaSituacaoQueue <-[#Orange,dashed]- PedidoService:Atualiza situação do pedido
+ProducaoQueue <-[#Orange,dashed]-- ProducaoService:Inicia produção
+
+ProducaoService -[#Orange]-> OrquestradorQueue: Pronto
+ProducaoService -[#Orange]-> OrquestradorQueue: Em entrega
+ProducaoService -[#Orange]-> OrquestradorQueue: Finalizado
+
+
+legend left
+{{
+
+!procedure $arrow($text, $arrowStyle)
+\n<font:monospaced.bold>$text</font> => \n{{\nleft to right direction\nskinparam backgroundcolor transparent\nlabel " " as A\nlabel " " as B\nA $arrowStyle B\n}}\n
+!endprocedure
+
+map "Legenda" as arrows {
+$arrow("Publica mensagem","-[#Orange]->")
+$arrow("Consome mensagem","-[#Orange,dashed]->")
+}
+
+}}
+endlegend
+
+@enduml

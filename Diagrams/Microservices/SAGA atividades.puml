@@ -1,0 +1,89 @@
+@startuml SAGA_atividades
+
+!theme reddress-lightorange
+
+|#Orange|cliente| Cliente
+|pedido| Pedido
+|pagamento| Pagamento
+|producao| Produção
+
+|cliente|
+start
+:Monta pedido;
+
+|pedido|
+
+:Pedido em andamento;
+:Pedido recebido;
+
+|pagamento|
+
+:Pagamento pendente;
+
+split 
+    |pedido|
+    :Aguardando pagamento;
+split again
+    |pagamento|
+    :Envio de informação de cobrança>
+end split
+
+|#IndianRed|gateway| Gateway Pagamento
+
+:Procede com a cbrança;
+
+split
+    :Pagamento com erro;
+    :Retorna falha no pagamento<
+    |pagamento|
+    :Falha no pagamento;
+    |pedido|
+    :Falha no pagamento;
+    end
+split again
+    |gateway|
+    :Pagamento efetuado;
+    :Retorna pagamento com sucesso<
+    |pagamento|
+    :Pagamento efetuado;
+end split
+
+|pedido|
+
+:Pago;
+
+split
+    |pedido|
+    :Em Produção;
+split again
+    |producao|
+    :Pedido adicionado a fila;
+end split
+
+split
+    |pedido|
+    :Pronto;
+split again
+    |producao|
+    :Pedido montado e pronto;
+end split
+split
+    |pedido|
+    :Em Entrega;
+split again
+    |producao|
+    :Pedido na fila para a entrega;
+end split
+
+split
+    |pedido|
+    :Entregue;
+split again
+    |producao|
+    :Pedido entregue;
+end split
+
+|cliente|
+stop
+
+@enduml

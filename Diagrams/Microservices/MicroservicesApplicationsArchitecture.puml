@@ -1,0 +1,107 @@
+@startuml MicroservicesApplicationsArchitecture
+!include ../Commons/CleanArchitecture.puml
+
+'melhorar a forma de definir os pacotes das classes 
+'set separator ::
+
+Node Clientes {
+    frame "Clientes Frameworks & Drivers" <<FrameworksAndDrivers>> {
+
+        frame "Clientes Intefaces Adapters" <<IntefacesAdapters>> {
+
+
+            frame "Clientes Applications Business Rules" <<ApplicationsBusinessRules>> {
+
+                frame "Clientes Enterprise Business Rules" <<EnterpriseBusinessRules>> {
+
+                    component "Cadastro" as cadastroModulo <<Modulo>> {
+
+                    }
+                    component "Login" as loginModulo <<Modulo>> {
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+Node Backoffice {
+
+    package "Produtos" as produtosPkg {
+        frame "Backoffice Frameworks & Drivers" <<FrameworksAndDrivers>> {
+
+            frame "ports" <<IntefacesAdapters>> {
+
+                interface application.produto.port.api.IProdutoPort                
+                interface application.produto.port.spi.IProdutoRepositoryGateway
+                class application.produto.usecase.ManutecaoProdutoUsecaseImpl
+                
+                class infrastructure.adapter.driven.persistence.repository.ProdutoRepositoryGateway
+                
+
+                IProdutoRepositoryGateway <|.. ProdutoRepositoryGateway
+
+                frame "Backoffice Applications Business Rules" <<ApplicationsBusinessRules>> {
+
+                    frame entidades <<EnterpriseBusinessRules>> {
+
+                        class application.produto.model.Produto {}
+                        enum application.produto.model.Categoria {
+                            LANCHE
+                            ACOMPANHAMENTO
+                            BEBIDA
+                            SOBREMESA
+                        }
+                        enum application.produto.model.SituacaoProduto  {
+                            DISPONIVEL
+                            INDISPONIVEL
+                        }
+                        Produto --> "1" Categoria : Tem >
+                        Produto --> "1" SituacaoProduto : Está na >
+
+                        
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    package "Analise Perfil Pedidos" as analisePerfilPedidosModulo {
+        frame "Backoffice Frameworks & Drivers" <<FrameworksAndDrivers>> {
+
+            frame "Backoffice Intefaces Adapters" <<IntefacesAdapters>> {
+
+                frame "Backoffice Applications Business Rules" <<ApplicationsBusinessRules>> {
+
+                    frame "Model" <<EnterpriseBusinessRules>> {
+
+
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+}
+
+
+
+skinparam LegendBackgroundColor #WhiteSmoke
+legend left
+|= Cor |= Camada Clean Architecture |
+|<#A7D7FD>| Frameworks & Drivers|
+|<#A2FDBA>| Intefaces Adapters|
+|<#FFA09C>| Applications Business Rules|
+|<#FCFDBA>| Enterprise Business Rules|
+endlegend
+
+@enduml

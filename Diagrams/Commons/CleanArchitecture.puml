@@ -1,0 +1,40 @@
+@startuml
+!include Skinparam.puml
+
+skinparam package {
+    BackgroundColor #Lavender
+}
+
+skinparam node {
+    BackgroundColor #CornSilk
+}
+
+skinparam frame {
+    BackgroundColor<<FrameworksAndDrivers>> #A7D7FD
+    BackgroundColor<<IntefacesAdapters>> #A2FDBA
+    BackgroundColor<<ApplicationsBusinessRules>> #FFA09C
+    BackgroundColor<<EnterpriseBusinessRules>> #FCFDBA
+}
+
+skinparam component {
+    BackgroundColor #Snow
+}
+
+' node Teste as TesteNode {
+'         frame "Teste Frameworks & Drivers" <<FrameworksAndDrivers>> {
+
+'             frame "Teste Intefaces Adapters" <<IntefacesAdapters>> {
+
+'                 frame "Teste Applications Business Rules" <<ApplicationsBusinessRules>> {
+
+'                     frame "Cliente Enterprise Business Rules" <<EnterpriseBusinessRules>> {
+
+'                         class teste.application.domain.model {}
+                        
+'                     }
+'                 }
+'             }
+'         }
+' }
+
+@enduml
